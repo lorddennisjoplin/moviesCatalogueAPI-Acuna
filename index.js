@@ -35,4 +35,9 @@ if (require.main === module) {
     });
 }
 
+// Optional: Root route to help test deployment
+app.get("/", (req, res) => {
+    res.status(200).json({ message: "API is working" });
+});
+
 module.exports = { app, mongoose };
