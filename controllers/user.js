@@ -33,6 +33,7 @@ module.exports.registerUser = async (req, res) => {
 
         // Create new user
         const newUser = new User({
+            name: req.body.name,
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, 10)
         });
