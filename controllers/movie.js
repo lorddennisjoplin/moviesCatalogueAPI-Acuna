@@ -28,12 +28,12 @@ module.exports.getAllMovies = (req, res) => {
         return res.status(401).json({ message: "Unauthorized: No token provided" });
     }
 
-    Movie.find({})
+    return Movie.find({})
         .then(result => {
             if (result.length > 0) {
                 return res.status(200).json({ movies: result });
             } else {
-                return res.status(200).json({ message: 'No movies found.' });
+                return res.status(404).json({ message: 'No movies found.' });
             }
         })
         .catch(error => errorHandler(error, req, res));
