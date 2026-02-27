@@ -7,11 +7,12 @@ const secret = process.env.JWT_SECRET; // read from .env
 module.exports.createAccessToken = (user) => {
     const data = {
         id: user._id,
+        name: user.name,
         email: user.email,
         isAdmin: user.isAdmin
     };
 
-    return jwt.sign(data, secret, { expiresIn: '1h' }); // optional expiration
+    return jwt.sign(data, secret);
 };
 
 // Verify JWT
@@ -19,7 +20,7 @@ module.exports.verify = (req, res, next) => {
     let token = req.headers.authorization;
 
     if (!token) {
-        return res.status(401).json({ auth: "Failed. No Token" });
+        return res.status(401).json({ auth: "Failed. Missing token." });
     }
 
     token = token.slice(7); // remove "Bearer "
