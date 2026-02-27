@@ -10,6 +10,12 @@ module.exports.addMovie = (req, res) => {
         genre : req.body.genre
     });
 
+    const year = req.body.year
+
+    if (!/^\d{4}$/.test(year)) {
+        return res.status(400).json({ message: "Invalid year." })
+    }
+
     Movie.findOne({ title: req.body.title })
     .then(existingMovie => {
         if(existingMovie){
