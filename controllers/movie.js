@@ -7,13 +7,21 @@ module.exports.addMovie = (req, res) => {
         director : req.body.director,
         year : req.body.year,
         description : req.body.description,
-        genre : req.body.genre
+        genre : req.body.genre,
+        image : req.body.image
     });
 
     const year = req.body.year
 
     if (!/^\d{4}$/.test(year)) {
         return res.status(400).json({ message: "Invalid year." })
+    }
+
+    if (image) {
+        const validExtensions = /\.(jpg|jpeg|png|gif|svg|webp)$/i
+        if (!validExtensions.test(image)) {
+            return res.status(400).json({ message: "Invalid image. Accepted extensions: .jpg, .jpeg, .png, .gif, .svg, or .webp" })
+        }
     }
 
     Movie.findOne({ title: req.body.title })
@@ -74,7 +82,8 @@ module.exports.updateMovie = (req, res) => {
         director: req.body.director,
         year: req.body.year,
         description: req.body.description,
-        genre: req.body.genre
+        genre: req.body.genre,
+        image: req.body.image
     };
 
     Movie.findByIdAndUpdate(
