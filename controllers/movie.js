@@ -38,6 +38,10 @@ module.exports.addMovie = (req, res) => {
 }; 
 
 module.exports.getAllMovies = (req, res) => {
+    if (!req.user) {
+        return res.status(401).json({ message: "Unauthorized: No token provided" });
+    }
+
     return Movie.find({})
         .then(result => {
             if (result.length > 0) {
